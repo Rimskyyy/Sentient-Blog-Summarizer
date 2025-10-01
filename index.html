@@ -29,9 +29,7 @@ h2 {margin-bottom:20px; text-align:center; font-size:1.8rem;}
   transition:0.3s;
   text-decoration:none;
 }
-.btn-secondary:hover {
-  background:rgba(255,255,255,0.2);
-}
+.btn-secondary:hover { background:rgba(255,255,255,0.2);}
 .summary, .quiz, .result {background: rgba(255,255,255,0.08); border-radius:16px; padding:25px; margin:25px 0; box-shadow:0 6px 15px rgba(0,0,0,0.3);}
 .quiz h3 { margin-top:0; }
 .option { padding:12px; border-radius:10px; margin:8px 0; cursor:pointer; background:rgba(255,255,255,0.05); transition:0.3s;}
@@ -79,15 +77,69 @@ const blogs = [
 {
 title:"What is Sentient?",
 link:"https://blog.sentient.xyz/posts/what-is-sentient",
-summary:"Sentient is creating the first open, community-built AGI to challenge closed-source systems from major AI companies. The GRID connects agents, models, data, and computing resources into a unified intelligence network. Users access it through Sentient Chat, while the $SENT economy allows staking and open-source funding. This approach ensures a distributed, cooperative, and transparent development of AGI that empowers the community and mitigates concentration of AI control.",
+summary:"Sentient is the first open, community-built AGI system, designed to challenge closed-source AI dominance from companies like OpenAI and Google. The GRID connects agents, models, data, and computing resources into a cooperative network, ensuring distributed intelligence. Users access it via Sentient Chat, while the $SENT economy enables staking and open-source funding, rewarding contributors. This transparent approach allows the community to guide AGI development and mitigates concentration of AI control. Sentient is essentially redefining how AI intelligence can be collectively built and shared.",
 quiz:[
-{q:"What is the goal of Sentient?", options:["Closed-source AI","Open community-built AGI","Hardware development","Gaming AI"], answer:1},
-{q:"What is The GRID?", options:["AI robot","Network of agents and models","Programming language","Company"], answer:1},
-{q:"How do users access GRID?", options:["Direct terminal","Sentient Chat","Email","API only"], answer:1},
+{q:"What is the main goal of Sentient?", options:["Closed-source AI","Open community-built AGI","Hardware development","Gaming AI"], answer:1},
+{q:"The GRID is?", options:["AI robot","Network of agents and models","Programming language","Company"], answer:1},
+{q:"How do users access the GRID?", options:["Direct terminal","Sentient Chat","Email","API only"], answer:1},
 {q:"What is $SENT used for?", options:["Gaming","Open-source funding and staking","AI hardware","Messaging"], answer:1},
 {q:"Why was Sentient created?", options:["To monopolize AI","To challenge closed AGI dominance","To develop games","To create robots"], answer:1}
 ]},
-// ... [Other 5 blogs with expanded summaries remain the same as previous code, omitted here for brevity] ...
+{
+title:"What is GRID?",
+link:"https://blog.sentient.xyz/posts/what-is-grid",
+summary:"GRID (Global Research and Intelligence Directory) is an open-source ecosystem of specialized agents, models, data, and compute resources. It intelligently splits queries, routes them to the right components, and aggregates results into coherent responses. Sentient Chat provides access to the GRID for users and developers. Over 110 participants contribute tools, agents, and infrastructure, incentivized through the $SENT token economy. This ensures that resources and contributions are efficiently allocated and rewarded, supporting sustainable open-source AGI growth.",
+quiz:[
+{q:"GRID stands for?", options:["Global Research and Intelligence Directory","General AI Directory","Global Robot Interface","None"], answer:0},
+{q:"How does GRID process queries?", options:["Single AI","Split, route, recombine","Manual handling","Ignore queries"], answer:1},
+{q:"How many participants in GRID?", options:["50","110+","10","500"], answer:1},
+{q:"Which interface gives access to GRID?", options:["GRID Terminal","Sentient Chat","OpenAI Chat","API"], answer:1},
+{q:"What is the role of $SENT?", options:["Staking and funding","Gaming","Chatting","Hardware"], answer:0}
+]},
+{
+title:"Recursive Open Meta Agent (ROMA)",
+link:"https://blog.sentient.xyz/posts/recursive-open-meta-agent",
+summary:"ROMA is a recursive open-source meta-agent framework that breaks complex goals into smaller subtasks, handled by specialized agents or tools. Its hierarchical, recursive structure ensures context flows seamlessly across tasks, allowing transparent and traceable reasoning. ROMA enables high-performance multi-agent systems capable of tackling sophisticated problems efficiently, supporting distributed AGI workflows and enhancing overall system intelligence.",
+quiz:[
+{q:"ROMA is?", options:["Closed system","Open multi-agent framework","Game","Language model"], answer:1},
+{q:"What does ROMA do?", options:["Single AI tasks","Breaks complex goals into subtasks","Creates hardware","Monitors chat"], answer:1},
+{q:"Why use ROMA?", options:["Random processing","Transparent reasoning","Gaming","Email handling"], answer:1},
+{q:"Tasks in ROMA are handled by?", options:["Humans","Specialized agents","Random AI","API only"], answer:1},
+{q:"ROMA ensures?", options:["Secrecy","Context flows seamlessly","Gaming","None"], answer:1}
+]},
+{
+title:"How Does the GRID Orchestrate Intelligence?",
+link:"https://blog.sentient.xyz/posts/how-does-the-grid-orchestrate-intelligence",
+summary:"The GRID orchestrates thousands of agents, models, and data streams to produce AGI-level outputs. Expert and community-defined workflows manage straightforward queries, while complex queries are recursively atomized into smaller atomic tasks. Token-level routing ensures each smallest unit of data is sent to the most suitable intelligence, and results are stitched together. This allows highly scalable, coordinated intelligence, functioning like a distributed brain with precision and efficiency.",
+quiz:[
+{q:"GRID orchestration involves?", options:["Thousands of models and agents","Single AI","Manual handling","None"], answer:0},
+{q:"What is recursive atomization?", options:["Breaking queries into atomic tasks","Ignoring queries","Single agent process","Random distribution"], answer:0},
+{q:"What are workflows in GRID?", options:["Predefined processes for queries","Games","Hardware operations","Email pipelines"], answer:0},
+{q:"Token-level routing routes at?", options:["Query level","Sentence level","Token level","Paragraph level"], answer:2},
+{q:"What type of output does GRID deliver?", options:["AGI-level","Simple","Random","Text only"], answer:0}
+]},
+{
+title:"Fingerprinting: Enabling Open-Source Monetization",
+link:"https://blog.sentient.xyz/posts/fingerprinting-enabling-open-source-monetization-on-the-model-layer",
+summary:"Fingerprinting embeds unique digital signatures into AI models, allowing creators to verify ownership and enforce usage boundaries. It ensures models are aligned with community values and principles. Blockchain-based smart contracts track authorized usage, creating a secure and monetizable framework for open-source AI. This empowers creators, provides transparency, and protects intellectual property while supporting community-driven AI development.",
+quiz:[
+{q:"What is fingerprinting used for?", options:["Ownership verification","Gaming","Chat","Random"], answer:0},
+{q:"How are signatures embedded?", options:["Invisible key-response pairs","Obvious watermark","Hardware","API"], answer:0},
+{q:"What does fingerprinting enforce?", options:["Licensing and usage control","Games","Chat","None"], answer:0},
+{q:"Models are aligned to?", options:["Community values","Hardware","Random AI","Chat"], answer:0},
+{q:"Tracking is via?", options:["Smart contracts","Email","Manual logs","Gaming"], answer:0}
+]},
+{
+title:"GRID just got an upgrade",
+link:"https://blog.sentient.xyz/posts/grid-just-got-an-upgrade",
+summary:"Sentient’s GRID now includes Spaces within Sentient Chat, unifying agents, models, and data into seamless workflows. Tools like ROMA, Open Deep Search, Dobby, and Fingerprinting are integrated. Spaces support practical applications like Asset Reports, Travel Planning, and Good Morning Reports. These upgrades enhance usability, making Sentient Chat more powerful, practical, and user-friendly for both builders and end-users.",
+quiz:[
+{q:"What new feature was added?", options:["Spaces","Agents","Models","Tokens"], answer:0},
+{q:"Spaces unify?", options:["Data, agents, models","Hardware","Chat apps","Games"], answer:0},
+{q:"Which tool handles complex tasks?", options:["ROMA","Dobby","Open Deep Search","Fingerprinting"], answer:0},
+{q:"Example of Spaces?", options:["Travel Planning","Hardware","Email","Gaming"], answer:0},
+{q:"Sentient Chat now is?", options:["More practical and user-friendly","Less functional","Random","Gaming"], answer:0}
+]}
 ];
 
 const blogList=document.getElementById("blogList");
