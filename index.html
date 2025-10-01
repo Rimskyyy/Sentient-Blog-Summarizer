@@ -1,354 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sentient Blog Summarizer</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-      color: white;
-    }
-    header {
-      text-align: center;
-      padding: 20px;
-      background: rgba(0,0,0,0.4);
-    }
-    header img {
-      height: 70px;
-      border-radius: 50%;
-    }
-    .container {
-      max-width: 900px;
-      margin: auto;
-      padding: 20px;
-    }
-    .blog-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-    }
-    .blog-card {
-      background: rgba(255,255,255,0.1);
-      border-radius: 12px;
-      padding: 15px;
-      cursor: pointer;
-      transition: transform 0.3s;
-    }
-    .blog-card:hover {
-      transform: translateY(-5px);
-      background: rgba(255,255,255,0.2);
-    }
-    .summary, .quiz, .result {
-      background: rgba(255,255,255,0.1);
-      border-radius: 12px;
-      padding: 20px;
-      margin: 20px 0;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    }
-    .quiz h3 {
-      margin-top: 0;
-    }
-    .option {
-      padding: 10px;
-      border-radius: 8px;
-      margin: 5px 0;
-      cursor: pointer;
-      background: rgba(255,255,255,0.05);
-      transition: 0.3s;
-    }
-    .option:hover {
-      background: rgba(255,255,255,0.2);
-    }
-    .correct { background: #28a745 !important; }
-    .wrong { background: #dc3545 !important; }
-    .btn {
-      padding: 10px 20px;
-      background: #00c6ff;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-      margin-top: 15px;
-      transition: 0.3s;
-    }
-    .btn:hover {
-      background: #0072ff;
-    }
-    footer {
-      text-align: center;
-      padding: 20px;
-      margin-top: 30px;
-      background: rgba(0,0,0,0.6);
-      border-top: 1px solid rgba(255,255,255,0.2);
-    }
-    footer img.pfp {
-      height: 60px;
-      width: 60px;
-      border-radius: 50%;
-      margin-bottom: 10px;
-    }
-    .socials {
-      margin-top: 10px;
-    }
-    .socials a, .socials span {
-      margin: 0 10px;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      color: white;
-      text-decoration: none;
-      font-size: 16px;
-    }
-    .socials img {
-      height: 20px;
-      width: 20px;
-      border-radius: 4px;
-    }
-  </style>
-</head>
-<body>
+function showQuiz(index) {
+  const blog = blogs[index];
+  const quizDiv = document.getElementById("quizContainer");
+  quizDiv.innerHTML = `<div class="quiz"><h3>Quiz</h3></div>`;
+  const quizBox = quizDiv.querySelector(".quiz");
 
-<header>
-  <img src="https://pbs.twimg.com/profile_images/1966252290500710400/iacpKDQc_400x400.jpg" alt="Sentient Logo">
-  <h1>Sentient Blog Summarizer</h1>
-  <p>Read summaries & test your knowledge with quizzes</p>
-</header>
+  // Track score
+  let score = 0;
 
-<div class="container" id="mainContent">
-  <h2>Available Blogs</h2>
-  <div class="blog-list" id="blogList"></div>
-</div>
+  blog.quiz.forEach((q, i) => {
+    let qDiv = document.createElement("div");
+    qDiv.innerHTML = `<h4>${i+1}. ${q.q}</h4>`;
+    q.options.forEach((opt, idx) => {
+      let optDiv = document.createElement("div");
+      optDiv.className = "option";
+      optDiv.innerText = opt;
+      optDiv.onclick = () => {
+        // Only allow one click per question
+        if (qDiv.dataset.answered) return;
+        qDiv.dataset.answered = "true";
 
-<footer>
-  <img class="pfp" src="https://pbs.twimg.com/profile_images/1868541602320293888/-rPhBPR0_400x400.jpg" alt="Risky">
-  <p>Made by Risky</p>
-  <div class="socials">
-    <a href="https://x.com/risky_xyz" target="_blank">
-      <img src="https://pbs.twimg.com/profile_images/1861160031061745664/_BKu0vhx_400x400.jpg" alt="X"> @risky_xyz
-    </a>
-    <span>
-      <img src="https://pbs.twimg.com/profile_images/1795851438956204032/rLl5Y48q_400x400.jpg" alt="Discord"> riskyyy.xd
-    </span>
-  </div>
-</footer>
-
-<script>
-  const blogs = [
-    {
-      title: "GRID Just Got an Upgrade",
-      url: "https://blog.sentient.xyz/posts/grid-just-got-an-upgrade",
-      summary: "The GRID (Sentient’s intelligence network) got new upgrades including “Spaces” in Sentient Chat, enabling better integration of agents, data, and workflows.",
-      quiz: [
-        {q: "What feature was introduced in the upgrade?", options: ["Memory isolation", "Spaces", "Token routing", "Fingerprinting"], answer: 1},
-        {q: "The GRID coordinates:", options: ["Only models", "Agents, models, data", "Only data", "Only compute"], answer: 1},
-        {q: "Sentient Chat’s new workflow tool is called:", options: ["Spaces", "Flows", "Nodes", "Modules"], answer: 0},
-        {q: "The upgrade aims to improve:", options: ["Tone style", "Orchestration & coherence", "Image rendering", "Audio generation"], answer: 1},
-        {q: "GRID is part of:", options: ["Closed AI", "Open intelligence network", "Solo model", "Cloud service"], answer: 1}
-      ]
-    },
-    {
-      title: "Recursive Open Meta Agent (ROMA)",
-      url: "https://blog.sentient.xyz/posts/recursive-open-meta-agent",
-      summary: "ROMA is a multi-agent framework that recursively breaks complex tasks into smaller ones and recombines results. It supports long-horizon reasoning with transparency and modularity.",
-      quiz: [
-        {q: "ROMA breaks tasks into:", options: ["One step", "Subtasks recursively", "Random chunks", "No division"], answer: 1},
-        {q: "ROMA aggregates results by:", options: ["Averaging", "Parent node combine", "Discarding", "External tool"], answer: 1},
-        {q: "ROMA is useful for:", options: ["Short tasks", "Long-horizon tasks", "Image generation", "Only math"], answer: 1},
-        {q: "ROMA is open-source:", options: ["Yes", "No"], answer: 0},
-        {q: "ROMA’s structure is:", options: ["Linear", "Tree / hierarchical", "Flat", "Random graph"], answer: 1}
-      ]
-    },
-    {
-      title: "What is GRID",
-      url: "https://blog.sentient.xyz/posts/what-is-grid",
-      summary: "GRID is Sentient’s open ecosystem of agents, models, data, and tools. Queries are split, routed to appropriate intelligences, and recombined to form final answers.",
-      quiz: [
-        {q: "GRID stands for:", options: ["Global Research & Intelligence Directory", "General Research AI Domain", "Global Resource ID", "Graph Intelligence Design"], answer: 0},
-        {q: "Queries in GRID are:", options: ["Single model", "Split & recombined", "Random", "Not processed"], answer: 1},
-        {q: "GRID includes:", options: ["Only models", "Agents, tools, data", "Only data", "Compute only"], answer: 1},
-        {q: "Users access GRID via:", options: ["Sentient Chat", "Email", "FTP", "Phone"], answer: 0},
-        {q: "GRID supports monetization via:", options: ["Ads", "Token staking", "Surveys", "Donations"], answer: 1}
-      ]
-    },
-    {
-      title: "What is Sentient",
-      url: "https://blog.sentient.xyz/posts/what-is-sentient",
-      summary: "Sentient’s goal is to build open, community-driven AGI rather than closed systems. It uses the GRID to make open AI sustainable via economic and participatory mechanisms.",
-      quiz: [
-        {q: "Sentient aims to build:", options: ["Closed AGI", "Open-source AGI", "No AI", "Proprietary model"], answer: 1},
-        {q: "Current challenge for open AI is:", options: ["Too easy", "Funding & distribution", "Over-powered", "No challenge"], answer: 1},
-        {q: "Access to GRID is via:", options: ["Sentient Chat", "Email", "Phone app", "None"], answer: 0},
-        {q: "Sentient competes with:", options: ["Closed AI labs", "Gaming studios", "Banks", "E-commerce"], answer: 0},
-        {q: "Monetization in Sentient uses:", options: ["Ads", "Token economy", "Subscriptions only", "Donations"], answer: 1}
-      ]
-    },
-    {
-      title: "How Does the GRID Orchestrate Intelligence",
-      url: "https://blog.sentient.xyz/posts/how-does-the-grid-orchestrate-intelligence",
-      summary: "The GRID routes tasks via workflows, atomizes queries recursively, and even routes at token-level, combining results from multiple intelligences into final answers.",
-      quiz: [
-        {q: "GRID breaks queries via:", options: ["Workflows", "Random splits", "No break", "Manual"], answer: 0},
-        {q: "Atomization means:", options: ["Breaking into subtasks", "Merging tasks", "Deleting tasks", "Repeating"], answer: 0},
-        {q: "Token-level routing sends:", options: ["Whole query", "Individual tokens", "Only data", "Image segments"], answer: 1},
-        {q: "Results are:", options: ["Discarded", "Recombined", "Ignored", "Deleted"], answer: 1},
-        {q: "GRID orchestration is like:", options: ["Single brain", "Distributed brain", "Manual process", "Static"], answer: 1}
-      ]
-    },
-    {
-      title: "Context Manipulation Attacks",
-      url: "https://blog.sentient.xyz/posts/context-manipulation-attacks",
-      summary: "This post describes how malicious context injections into agent memory can hijack behavior (e.g. in crypto). It advocates secure memory isolation and semantic integrity checks.",
-      quiz: [
-        {q: "Context manipulation can lead to:", options: ["Better accuracy", "Unauthorized actions", "Faster models", "No effect"], answer: 1},
-        {q: "They demonstrated attacks on:", options: ["Social media", "Crypto agents", "Weather bots", "Art bots"], answer: 1},
-        {q: "Defense includes:", options: ["Memory isolation", "No protection", "Open context", "None"], answer: 0},
-        {q: "Semantic integrity checks:", options: ["Allow attacks", "Remove suspicious steps", "Disable agents", "Ignore context"], answer: 1},
-        {q: "Prompt-only defenses are:", options: ["Sufficient", "Insufficient", "Perfect", "Not used"], answer: 1}
-      ]
-    },
-    {
-      title: "Why AI Isn’t a Coding Grandmaster Yet",
-      url: "https://blog.sentient.xyz/posts/why-ai-isnt-a-coding-grandmaster-yet",
-      summary: "Sentient shows that mixing chain-of-thought distilled data, domain-diverse tasks, and efficient scaling helps models (like Dobby-CP) approach high coding performance at lower compute cost.",
-      quiz: [
-        {q: "Best learning signal was:", options: ["Human-written data", "Distilled CoT from LLMs", "No data", "Random"], answer: 1},
-        {q: "They found priority in:", options: ["Problem diversity", "More samples", "Bigger models", "Larger batch size"], answer: 0},
-        {q: "Dobby-CP model is:", options: ["Closed", "Open", "Encrypted", "None"], answer: 1},
-        {q: "Goal is to reach:", options: ["Grandmaster in AI", "No AI", "Only images", "No coding"], answer: 0},
-        {q: "Scaling law emphasizes:", options: ["More samples", "Task diversity", "Larger model only", "No scaling"], answer: 1}
-      ]
-    },
-    {
-      title: "Doesn’t Sound Like a Corporate Robot",
-      url: "https://blog.sentient.xyz/posts/doesnt-sound-like-a-corporate-robot",
-      summary: "Sentient introduces *token-level routing*, letting personality models handle tone and switching to stronger models for factual tokens. This helps AI sound authentic yet accurate.",
-      quiz: [
-        {q: "Token-level routing mixes:", options: ["One model", "Tone + factual models", "No mix", "Random"], answer: 1},
-        {q: "Personality model handles:", options: ["Facts", "Tone / style", "All tokens", "None"], answer: 1},
-        {q: "Stronger model triggers for:", options: ["Factual parts", "Jokes only", "Random", "Errors only"], answer: 0},
-        {q: "Goal is:", options: ["Corporate tone", "Authenticity + accuracy", "Boring text", "No tone"], answer: 1},
-        {q: "This method reduces:", options: ["Cost", "Accuracy", "Performance", "None"], answer: 0}
-      ]
-    },
-    {
-      title: "Fingerprinting: Enabling Open-Source Monetization",
-      url: "https://blog.sentient.xyz/posts/fingerprinting-enabling-open-source-monetization-on-the-model-layer",
-      summary: "Fingerprinting embeds hidden signatures in models to verify ownership and usage. It’s a key step for monetizing open-source models while preserving openness.",
-      quiz: [
-        {q: "Fingerprinting allows:", options: ["No ownership", "Proven ownership", "Random claims", "No detection"], answer: 1},
-        {q: "Fingerprints are:", options: ["Visible", "Subtle & undetectable", "Disabled", "Removed"], answer: 1},
-        {q: "Usage enforcement uses:", options: ["Ads", "Blockchain & contracts", "Nothing", "Emails"], answer: 1},
-        {q: "Fingerprinting degrades performance:", options: ["Yes", "No, minimal", "Always", "Impossible"], answer: 1},
-        {q: "Purpose is to support:", options: ["Open model theft", "Monetization", "Closed AI only", "No models"], answer: 1}
-      ]
-    },
-    {
-      title: "Open Deep Search: Closing the Gap",
-      url: "https://blog.sentient.xyz/posts/open-deep-search-closing-the-gap-between-proprietary-and-open-source-search-ai",
-      summary: "Open Deep Search (ODS) is an open-source reasoning + search framework that rivals proprietary search systems across benchmarks, making powerful search accessible. :contentReference[oaicite:10]{index=10}",
-      quiz: [
-        {q: "ODS is:", options: ["Closed", "Open-source", "Hybrid", "None"], answer: 1},
-        {q: "ODS outperforms in:", options: ["Gaming", "Search benchmarks", "Art", "None"], answer: 1},
-        {q: "ODS wraps around:", options: ["No model", "LLM + search tools", "Image model", "Audio model"], answer: 1},
-        {q: "Goal is to close gap between:", options: ["Open & closed search", "AI & humans", "Compute & data", "None"], answer: 0},
-        {q: "Users are encouraged to:", options: ["Ignore ODS", "Build & extend ODS", "Lock it", "Delete it"], answer: 1}
-      ]
-    },
-    {
-      title: "AI Agents in Cryptoland",
-      url: "https://blog.sentient.xyz/posts/ai-agents-in-cryptoland",
-      summary: "Explores how AI agents operate in crypto ecosystems, possible risks, and how no single approach is bulletproof. (You’ll need to write more once you read it.)",
-      quiz: [
-        {q: "What environment does this blog focus on?", options: ["Healthcare", "Crypto / blockchain", "Gaming", "Weather"], answer: 1},
-        {q: "It discusses:", options: ["Agent attacks", "Art models", "Weather prediction", "None"], answer: 0},
-        {q: "It says there is:", options: ["A silver bullet", "No silver bullet", "A perfect model", "None"], answer: 1},
-        {q: "Agents in cryptoland face:", options: ["Zero risk", "Risks & threats", "No agents", "None"], answer: 1},
-        {q: "You will need to:", options: ["Design new agents", "Read the blog", "Ignore it", "Delete it"], answer: 1}
-      ]
-    }
-  ];
-
-  const blogList = document.getElementById("blogList");
-  const mainContent = document.getElementById("mainContent");
-
-  function renderBlogList(){
-    mainContent.innerHTML = `<h2>Available Blogs</h2><div class="blog-list" id="blogList"></div>`;
-    const bl = document.getElementById("blogList");
-    blogs.forEach((blog, idx) => {
-      const card = document.createElement("div");
-      card.className = "blog-card";
-      card.innerHTML = `<h3>${blog.title}</h3><p>${blog.url}</p>`;
-      card.onclick = () => openBlog(idx);
-      bl.appendChild(card);
+        if (idx === q.answer) {
+          optDiv.classList.add("correct");
+          score += 1;
+        } else {
+          optDiv.classList.add("wrong");
+          // Also mark the correct option
+          const correctOpt = qDiv.querySelectorAll(".option")[q.answer];
+          if (correctOpt) correctOpt.classList.add("correct");
+        }
+        // After last question, show score
+        if (i === blog.quiz.length - 1) {
+          setTimeout(() => {
+            showScore(score, blog.quiz.length);
+          }, 500);
+        }
+      };
+      qDiv.appendChild(optDiv);
     });
-  }
+    quizBox.appendChild(qDiv);
+  });
+}
 
-  function openBlog(index) {
-    const blog = blogs[index];
-    mainContent.innerHTML = `
-      <h2>${blog.title}</h2>
-      <div class="summary">
-        <h3>Summary</h3>
-        <p>${blog.summary}</p>
-      </div>
-      <button class="btn" onclick="showQuiz(${index})">Take Quiz</button>
-      <div id="quizContainer"></div>
-      <button class="btn" style="margin-top:20px;" onclick="renderBlogList()">← Back to Blogs</button>
-    `;
-  }
-
-  function showQuiz(index) {
-    const blog = blogs[index];
-    const container = document.getElementById("quizContainer");
-    container.innerHTML = `<div class="quiz"><h3>Quiz</h3></div>`;
-    const quizBox = container.querySelector(".quiz");
-
-    // Track correct count
-    let correctCount = 0;
-
-    blog.quiz.forEach((q, i) => {
-      const qDiv = document.createElement("div");
-      qDiv.innerHTML = `<h4>${i+1}. ${q.q}</h4>`;
-      q.options.forEach((opt, idx) => {
-        const optDiv = document.createElement("div");
-        optDiv.className = "option";
-        optDiv.innerText = opt;
-        optDiv.onclick = () => {
-          // disable further clicks on this question
-          Array.from(qDiv.querySelectorAll(".option")).forEach(o => o.style.pointerEvents = "none");
-          if (idx === q.answer) {
-            optDiv.classList.add("correct");
-            correctCount++;
-          } else {
-            optDiv.classList.add("wrong");
-            // mark the correct one too
-            qDiv.querySelectorAll(".option")[q.answer].classList.add("correct");
-          }
-          // After last question, show result
-          if (i === blog.quiz.length - 1) {
-            showResult(correctCount, blog.quiz.length);
-          }
-        };
-        qDiv.appendChild(optDiv);
-      });
-      quizBox.appendChild(qDiv);
-    });
-  }
-
-  function showResult(correct, total) {
-    const resultDiv = document.createElement("div");
-    resultDiv.className = "result";
-    resultDiv.innerHTML = `<h3>Your Score: ${correct} / ${total}</h3>`;
-    mainContent.appendChild(resultDiv);
-  }
-
-  // Initial render
-  renderBlogList();
-</script>
-
-</body>
-</html>
+function showScore(correct, total) {
+  const quizContainer = document.getElementById("quizContainer");
+  const scoreDiv = document.createElement("div");
+  scoreDiv.style.marginTop = "20px";
+  scoreDiv.style.padding = "15px";
+  scoreDiv.style.background = "rgba(255,255,255,0.2)";
+  scoreDiv.style.borderRadius = "8px";
+  scoreDiv.innerHTML = `<h3>Your Score: ${correct} / ${total}</h3>`;
+  quizContainer.appendChild(scoreDiv);
+}
