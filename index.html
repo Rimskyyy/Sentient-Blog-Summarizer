@@ -62,11 +62,6 @@
       margin: 0 0 10px;
       font-size: 1.3rem;
     }
-    .blog-card p {
-      font-size: 0.95rem;
-      opacity: 0.9;
-      margin-bottom: 15px;
-    }
     .btn {
       padding: 10px 18px;
       background: linear-gradient(45deg, #00c6ff, #0072ff);
@@ -165,61 +160,17 @@
 
 <script>
   const blogs = [
-    {
-      title: "GRID Just Got an Upgrade",
-      url: "https://blog.sentient.xyz/posts/grid-just-got-an-upgrade",
-      summary: "The GRID introduces “Spaces” in Sentient Chat for better orchestration of agents, models, and workflows.",
-    },
-    {
-      title: "Recursive Open Meta Agent (ROMA)",
-      url: "https://blog.sentient.xyz/posts/recursive-open-meta-agent",
-      summary: "ROMA is a meta-agent framework that recursively breaks tasks into subtasks and aggregates their results.",
-    },
-    {
-      title: "What is GRID",
-      url: "https://blog.sentient.xyz/posts/what-is-grid",
-      summary: "GRID is Sentient’s open ecosystem of agents, models, and tools. Queries are split, routed, and recombined.",
-    },
-    {
-      title: "What is Sentient",
-      url: "https://blog.sentient.xyz/posts/what-is-sentient",
-      summary: "Sentient aims to build open, community-driven AGI instead of closed proprietary systems.",
-    },
-    {
-      title: "How Does the GRID Orchestrate Intelligence",
-      url: "https://blog.sentient.xyz/posts/how-does-the-grid-orchestrate-intelligence",
-      summary: "GRID orchestrates intelligence by routing, atomizing queries, and merging outputs from multiple agents.",
-    },
-    {
-      title: "Context Manipulation Attacks",
-      url: "https://blog.sentient.xyz/posts/context-manipulation-attacks",
-      summary: "Malicious context injections threaten agent safety. The post suggests memory isolation and integrity checks.",
-    },
-    {
-      title: "Why AI Isn’t a Coding Grandmaster Yet",
-      url: "https://blog.sentient.xyz/posts/why-ai-isnt-a-coding-grandmaster-yet",
-      summary: "Explores methods to train open models like Dobby-CP to achieve coding grandmaster-level performance.",
-    },
-    {
-      title: "Doesn’t Sound Like a Corporate Robot",
-      url: "https://blog.sentient.xyz/posts/doesnt-sound-like-a-corporate-robot",
-      summary: "Token-level routing lets models balance authentic tone with factual accuracy.",
-    },
-    {
-      title: "Fingerprinting: Enabling Open-Source Monetization",
-      url: "https://blog.sentient.xyz/posts/fingerprinting-enabling-open-source-monetization-on-the-model-layer",
-      summary: "Fingerprinting embeds hidden signatures in models to verify ownership and enable monetization.",
-    },
-    {
-      title: "Open Deep Search: Closing the Gap",
-      url: "https://blog.sentient.xyz/posts/open-deep-search-closing-the-gap-between-proprietary-and-open-source-search-ai",
-      summary: "Open Deep Search (ODS) combines reasoning + search, closing the gap between open and closed systems.",
-    },
-    {
-      title: "AI Agents in Cryptoland",
-      url: "https://blog.sentient.xyz/posts/ai-agents-in-cryptoland",
-      summary: "Discusses AI agents in blockchain ecosystems and risks they face in crypto environments.",
-    }
+    { title: "GRID Just Got an Upgrade", summary: "", quiz: [] },
+    { title: "Recursive Open Meta Agent (ROMA)", summary: "", quiz: [] },
+    { title: "What is GRID", summary: "", quiz: [] },
+    { title: "What is Sentient", summary: "", quiz: [] },
+    { title: "How Does the GRID Orchestrate Intelligence", summary: "", quiz: [] },
+    { title: "Context Manipulation Attacks", summary: "", quiz: [] },
+    { title: "Why AI Isn’t a Coding Grandmaster Yet", summary: "", quiz: [] },
+    { title: "Doesn’t Sound Like a Corporate Robot", summary: "", quiz: [] },
+    { title: "Fingerprinting: Enabling Open-Source Monetization", summary: "", quiz: [] },
+    { title: "Open Deep Search: Closing the Gap", summary: "", quiz: [] },
+    { title: "AI Agents in Cryptoland", summary: "", quiz: [] },
   ];
 
   const blogList = document.getElementById("blogList");
@@ -233,8 +184,7 @@
       card.className = "blog-card";
       card.innerHTML = `
         <h3>${blog.title}</h3>
-        <p>${blog.summary}</p>
-        <a href="#" class="btn" onclick="openBlog(${idx}); return false;">Read Summary</a>
+        <a href="#" class="btn" onclick="openBlog(${idx}); return false;">Read Summary & Take Quiz</a>
       `;
       bl.appendChild(card);
     });
@@ -246,16 +196,58 @@
       <h2>${blog.title}</h2>
       <div class="summary">
         <h3>Summary</h3>
-        <p>${blog.summary}</p>
-        <a href="${blog.url}" target="_blank" class="btn">Read Full Blog →</a>
+        <p>${blog.summary || "Summary will be added here."}</p>
+      </div>
+      <div id="quizContainer">
+        <h3>Quiz</h3>
       </div>
       <button class="btn" style="margin-top:20px;" onclick="renderBlogList()">← Back to Blogs</button>
     `;
+
+    const container = document.getElementById("quizContainer");
+
+    if(blog.quiz.length === 0){
+      container.innerHTML += "<p>Quiz will be added soon.</p>";
+      return;
+    }
+
+    let correctCount = 0;
+
+    blog.quiz.forEach((q, i) => {
+      const qDiv = document.createElement("div");
+      qDiv.className = "quiz-question";
+      qDiv.innerHTML = `<h4>${i+1}. ${q.q}</h4>`;
+      q.options.forEach((opt, idx) => {
+        const optDiv = document.createElement("div");
+        optDiv.className = "option";
+        optDiv.innerText = opt;
+        optDiv.onclick = () => {
+          Array.from(qDiv.querySelectorAll(".option")).forEach(o => o.style.pointerEvents = "none");
+          if(idx === q.answer) {
+            optDiv.classList.add("correct");
+            correctCount++;
+          } else {
+            optDiv.classList.add("wrong");
+            qDiv.querySelectorAll(".option")[q.answer].classList.add("correct");
+          }
+          if(i === blog.quiz.length - 1){
+            showResult(correctCount, blog.quiz.length);
+          }
+        };
+        qDiv.appendChild(optDiv);
+      });
+      container.appendChild(qDiv);
+    });
   }
 
-  // Initial render
+  function showResult(correct, total){
+    const resultDiv = document.createElement("div");
+    resultDiv.className = "result";
+    resultDiv.innerHTML = `<h3>Your Score: ${correct} / ${total}</h3>`;
+    mainContent.appendChild(resultDiv);
+  }
+
   renderBlogList();
 </script>
-
 </body>
 </html>
