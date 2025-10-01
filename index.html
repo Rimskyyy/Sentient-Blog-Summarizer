@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sentient Blog Summarizer</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: white;
+    }
+    header {
+      text-align: center;
+      padding: 20px;
+      background: rgba(0,0,0,0.4);
+    }
+    header img {
+      height: 60px;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
+    }
+    .url-input {
+      display: flex;
+      gap: 10px;
+      margin: 20px 0;
+    }
+    .url-input input {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+    }
+    .url-input button {
+      padding: 10px 20px;
+      background: #00c6ff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    .url-input button:hover {
+      background: #0072ff;
+    }
+    .summary, .quiz {
+      background: rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    .quiz h3 {
+      margin-top: 0;
+    }
+    .option {
+      padding: 10px;
+      border-radius: 8px;
+      margin: 5px 0;
+      cursor: pointer;
+      background: rgba(255,255,255,0.05);
+      transition: 0.3s;
+    }
+    .option:hover {
+      background: rgba(255,255,255,0.2);
+    }
+    .correct { background: #28a745 !important; }
+    .wrong { background: #dc3545 !important; }
+    footer {
+      text-align: center;
+      padding: 20px;
+      margin-top: 30px;
+      background: rgba(0,0,0,0.6);
+      border-top: 1px solid rgba(255,255,255,0.2);
+    }
+    footer img.pfp {
+      height: 60px;
+      width: 60px;
+      border-radius: 50%;
+      margin-bottom: 10px;
+    }
+    .socials a {
+      margin: 0 10px;
+      color: white;
+      text-decoration: none;
+      font-size: 22px;
+    }
+    @media(max-width: 600px){
+      .url-input { flex-direction: column; }
+      .url-input button { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <img src="https://sentient.xyz/images/logo.svg" alt="Sentient Logo">
+  <h1>Sentient Blog Summarizer</h1>
+  <p>Summaries & Quizzes from Sentient's Official Blog</p>
+</header>
+
+<div class="container">
+  <div class="url-input">
+    <input type="text" id="blogUrl" placeholder="Paste Sentient Blog URL...">
+    <button onclick="loadBlog()">Summarize</button>
+  </div>
+
+  <div id="content"></div>
+</div>
+
+<footer>
+  <img class="pfp" src="https://pbs.twimg.com/profile_images/1868541602320293888/-rPhBPR0_400x400.jpg" alt="Risky">
+  <p>Made by Risky</p>
+  <div class="socials">
+    <a href="https://x.com/risky_xyz" target="_blank">🐦</a>
+    <a href="https://discord.com/users/riskyyy.xd" target="_blank">💬</a>
+  </div>
+</footer>
+
+<script>
+  const blogs = {
+    "https://blog.sentient.xyz/posts/grid-just-got-an-upgrade": {
+      summary: "GRID received a major upgrade, enhancing orchestration capabilities. It improves collaboration between agents and makes reasoning more efficient. This update pushes Sentient closer to scalable open AI.",
+      quiz: [
+        {q: "What was upgraded in Sentient?", options: ["Agents", "GRID", "Context attacks", "Legal Reasoning"], answer: 1},
+        {q: "The upgrade improved?", options: ["Cooking", "Collaboration", "Music", "Drawing"], answer: 1},
+        {q: "GRID is responsible for?", options: ["Gaming", "Orchestration", "Memes", "Mining"], answer: 1},
+        {q: "This upgrade makes reasoning more?", options: ["Difficult", "Efficient", "Random", "Slow"], answer: 1},
+        {q: "Sentient aims to scale?", options: ["Centralized AI", "Open AI", "Private AI", "Closed AI"], answer: 1}
+      ]
+    },
+    "https://blog.sentient.xyz/posts/what-is-sentient": {
+      summary: "Sentient is building an open-source ecosystem for intelligence. It focuses on decentralization, scalability, and openness. Unlike corporate AI, Sentient aims to empower individuals and developers globally.",
+      quiz: [
+        {q: "Sentient is?", options: ["A Game", "An AI Ecosystem", "A Meme", "A Coin"], answer: 1},
+        {q: "It focuses on?", options: ["Centralization", "Decentralization", "Monopoly", "Gaming"], answer: 1},
+        {q: "Sentient is?", options: ["Closed", "Open Source", "Proprietary", "Secret"], answer: 1},
+        {q: "Sentient empowers?", options: ["Corporations", "Individuals", "Governments", "Only Rich"], answer: 1},
+        {q: "Goal of Sentient?", options: ["Lock AI", "Monetize Only", "Scale Open AI", "Close Tech"], answer: 2}
+      ]
+    }
+    // Add more blogs here in same format
+  };
+
+  function loadBlog(){
+    const url = document.getElementById("blogUrl").value.trim();
+    const blog = blogs[url];
+    const content = document.getElementById("content");
+    content.innerHTML = "";
+
+    if(!blog){
+      content.innerHTML = "<p>Blog not found or not added yet. Please try another.</p>";
+      return;
+    }
+
+    // Show Summary
+    const summaryDiv = document.createElement("div");
+    summaryDiv.className = "summary";
+    summaryDiv.innerHTML = `<h2>Summary</h2><p>${blog.summary}</p>`;
+    content.appendChild(summaryDiv);
+
+    // Show Quiz
+    const quizDiv = document.createElement("div");
+    quizDiv.className = "quiz";
+    quizDiv.innerHTML = `<h2>Quiz</h2>`;
+    blog.quiz.forEach((q, i) => {
+      let qDiv = document.createElement("div");
+      qDiv.innerHTML = `<h3>${i+1}. ${q.q}</h3>`;
+      q.options.forEach((opt, idx) => {
+        let optDiv = document.createElement("div");
+        optDiv.className = "option";
+        optDiv.innerText = opt;
+        optDiv.onclick = () => {
+          if(idx === q.answer){
+            optDiv.classList.add("correct");
+          } else {
+            optDiv.classList.add("wrong");
+          }
+        };
+        qDiv.appendChild(optDiv);
+      });
+      quizDiv.appendChild(qDiv);
+    });
+    content.appendChild(quizDiv);
+  }
+</script>
+
+</body>
+</html>
