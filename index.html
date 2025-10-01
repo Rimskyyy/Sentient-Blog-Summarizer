@@ -1,143 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sentient Blog Summarizer</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-      color: #f4f4f4;
-    }
-    header {
-      text-align: center;
-      padding: 30px 20px;
-      background: rgba(0,0,0,0.4);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    }
-    header img {
-      height: 80px;
-      border-radius: 50%;
-      margin-bottom: 10px;
-    }
-    header h1 {
-      margin: 10px 0 5px;
-      font-size: 2rem;
-      letter-spacing: 1px;
-    }
-    header p {
-      font-size: 1rem;
-      opacity: 0.8;
-    }
-    .container {
-      max-width: 1000px;
-      margin: auto;
-      padding: 30px 20px;
-    }
-    h2 {
-      margin-bottom: 20px;
-      text-align: center;
-      font-size: 1.8rem;
-    }
-    .blog-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 25px;
-    }
-    .blog-card {
-      background: rgba(255,255,255,0.08);
-      border-radius: 16px;
-      padding: 20px;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.3);
-      transition: transform 0.3s, background 0.3s;
-    }
-    .blog-card:hover {
-      transform: translateY(-8px);
-      background: rgba(255,255,255,0.15);
-    }
-    .blog-card h3 {
-      margin: 0 0 10px;
-      font-size: 1.3rem;
-    }
-    .btn {
-      padding: 10px 18px;
-      background: linear-gradient(45deg, #00c6ff, #0072ff);
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-      color: white;
-      transition: 0.3s;
-      display: inline-block;
-      text-decoration: none;
-      font-size: 0.9rem;
-    }
-    .btn:hover {
-      background: linear-gradient(45deg, #0072ff, #00c6ff);
-    }
-    .summary, .quiz, .result {
-      background: rgba(255,255,255,0.08);
-      border-radius: 16px;
-      padding: 25px;
-      margin: 25px 0;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.3);
-    }
-    .quiz h3 { margin-top: 0; }
-    .option {
-      padding: 12px;
-      border-radius: 10px;
-      margin: 8px 0;
-      cursor: pointer;
-      background: rgba(255,255,255,0.05);
-      transition: 0.3s;
-    }
-    .option:hover {
-      background: rgba(255,255,255,0.2);
-    }
-    .correct { background: #28a745 !important; color: #fff; }
-    .wrong { background: #dc3545 !important; color: #fff; }
-    footer {
-      text-align: center;
-      padding: 25px 15px;
-      margin-top: 40px;
-      background: rgba(0,0,0,0.6);
-      border-top: 1px solid rgba(255,255,255,0.2);
-    }
-    footer img.pfp {
-      height: 65px;
-      width: 65px;
-      border-radius: 50%;
-      margin-bottom: 10px;
-      box-shadow: 0 0 12px rgba(0,0,0,0.6);
-    }
-    .socials {
-      margin-top: 10px;
-    }
-    .socials a, .socials span {
-      margin: 0 12px;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      color: white;
-      text-decoration: none;
-      font-size: 15px;
-    }
-    .socials img {
-      height: 20px;
-      width: 20px;
-      border-radius: 4px;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sentient Blog Summarizer</title>
+<style>
+  body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin:0; padding:0; background: linear-gradient(135deg,#0f2027,#203a43,#2c5364); color:#f4f4f4; }
+  header { text-align:center; padding:30px 20px; background:rgba(0,0,0,0.4); box-shadow:0 4px 15px rgba(0,0,0,0.3);}
+  header img {height:80px;border-radius:50%;margin-bottom:10px;}
+  header h1 {margin:10px 0 5px;font-size:2rem;letter-spacing:1px;}
+  header p {font-size:1rem;opacity:0.8;}
+  .container { max-width:1000px; margin:auto; padding:30px 20px;}
+  h2 {margin-bottom:20px; text-align:center; font-size:1.8rem;}
+  .blog-list { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:25px; }
+  .blog-card { background:rgba(255,255,255,0.08); border-radius:16px; padding:20px; box-shadow:0 6px 15px rgba(0,0,0,0.3); transition:0.3s; }
+  .blog-card:hover { transform:translateY(-8px); background:rgba(255,255,255,0.15);}
+  .blog-card h3 { margin:0 0 10px; font-size:1.3rem;}
+  .btn {padding:10px 18px; background:linear-gradient(45deg,#00c6ff,#0072ff); border:none;border-radius:8px;cursor:pointer;font-weight:bold;color:white;transition:0.3s; display:inline-block; text-decoration:none; font-size:0.9rem;}
+  .btn:hover { background:linear-gradient(45deg,#0072ff,#00c6ff);}
+  .summary, .quiz, .result {background: rgba(255,255,255,0.08); border-radius:16px; padding:25px; margin:25px 0; box-shadow:0 6px 15px rgba(0,0,0,0.3);}
+  .quiz h3 { margin-top:0; }
+  .option { padding:12px; border-radius:10px; margin:8px 0; cursor:pointer; background:rgba(255,255,255,0.05); transition:0.3s;}
+  .option:hover { background:rgba(255,255,255,0.2);}
+  .correct { background:#28a745 !important; color:#fff; }
+  .wrong { background:#dc3545 !important; color:#fff; }
+  footer { text-align:center; padding:25px 15px; margin-top:40px; background:rgba(0,0,0,0.6); border-top:1px solid rgba(255,255,255,0.2);}
+  footer img.pfp { height:65px; width:65px; border-radius:50%; margin-bottom:10px; box-shadow:0 0 12px rgba(0,0,0,0.6);}
+  .socials { margin-top:10px; }
+  .socials a, .socials span { margin:0 12px; display:inline-flex; align-items:center; gap:6px; color:white; text-decoration:none; font-size:15px;}
+  .socials img {height:20px; width:20px; border-radius:4px;}
+</style>
 </head>
 <body>
-
 <header>
   <img src="https://pbs.twimg.com/profile_images/1966252290500710400/iacpKDQc_400x400.jpg" alt="Sentient Logo">
   <h1>Sentient Blog Summarizer</h1>
-  <p>Beautiful summaries & fun quizzes from Sentient blogs</p>
+  <p>Read summaries & take fun quizzes!</p>
 </header>
 
 <div class="container" id="mainContent">
@@ -149,105 +47,103 @@
   <img class="pfp" src="https://pbs.twimg.com/profile_images/1868541602320293888/-rPhBPR0_400x400.jpg" alt="Risky">
   <p>Made by Risky</p>
   <div class="socials">
-    <a href="https://x.com/risky_xyz" target="_blank">
-      <img src="https://pbs.twimg.com/profile_images/1861160031061745664/_BKu0vhx_400x400.jpg" alt="X"> @risky_xyz
-    </a>
-    <span>
-      <img src="https://pbs.twimg.com/profile_images/1795851438956204032/rLl5Y48q_400x400.jpg" alt="Discord"> riskyyy.xd
-    </span>
+    <a href="https://x.com/risky_xyz" target="_blank"><img src="https://pbs.twimg.com/profile_images/1861160031061745664/_BKu0vhx_400x400.jpg" alt="X"> @risky_xyz</a>
+    <span><img src="https://pbs.twimg.com/profile_images/1795851438956204032/rLl5Y48q_400x400.jpg" alt="Discord"> riskyyy.xd</span>
   </div>
 </footer>
 
 <script>
-  const blogs = [
-    { title: "GRID Just Got an Upgrade", summary: "", quiz: [] },
-    { title: "Recursive Open Meta Agent (ROMA)", summary: "", quiz: [] },
-    { title: "What is GRID", summary: "", quiz: [] },
-    { title: "What is Sentient", summary: "", quiz: [] },
-    { title: "How Does the GRID Orchestrate Intelligence", summary: "", quiz: [] },
-    { title: "Context Manipulation Attacks", summary: "", quiz: [] },
-    { title: "Why AI Isn’t a Coding Grandmaster Yet", summary: "", quiz: [] },
-    { title: "Doesn’t Sound Like a Corporate Robot", summary: "", quiz: [] },
-    { title: "Fingerprinting: Enabling Open-Source Monetization", summary: "", quiz: [] },
-    { title: "Open Deep Search: Closing the Gap", summary: "", quiz: [] },
-    { title: "AI Agents in Cryptoland", summary: "", quiz: [] },
-  ];
+const blogs = [
+{ title:"GRID Just Got an Upgrade", summary:"The GRID introduces 'Spaces' in Sentient Chat for better orchestration of agents, models, and workflows.", quiz:[
+{q:"What new feature did GRID introduce?", options:["Agents","Spaces","Models","Workflows"], answer:1},
+{q:"GRID helps orchestrate?", options:["Agents","Models","Both","None"], answer:2}
+]},
+{ title:"Recursive Open Meta Agent (ROMA)", summary:"ROMA is a meta-agent framework that recursively breaks tasks into subtasks and aggregates results.", quiz:[
+{q:"ROMA stands for?", options:["Recursive Open Meta Agent","Robust Operational Model Agent","Random Open Meta Algorithm","None"], answer:0},
+{q:"ROMA's main function is?", options:["Single task solving","Recursive task handling","Manual agent control","None"], answer:1}
+]},
+{ title:"What is GRID", summary:"GRID is Sentient’s open ecosystem of agents, models, and tools. Queries are split, routed, and recombined.", quiz:[
+{q:"GRID is a?", options:["Closed system","Open ecosystem","AI robot","None"], answer:1},
+{q:"GRID handles queries by?", options:["Routing & recombining","Ignoring","Manual input","All"], answer:0}
+]},
+{ title:"What is Sentient", summary:"Sentient aims to build open, community-driven AGI instead of closed proprietary systems.", quiz:[
+{q:"Sentient focuses on?", options:["Closed AI","Community-driven AGI","Hardware","None"], answer:1}
+]},
+{ title:"How Does the GRID Orchestrate Intelligence", summary:"GRID orchestrates intelligence by routing, atomizing queries, and merging outputs from multiple agents.", quiz:[
+{q:"GRID orchestrates intelligence via?", options:["Random guesses","Routing & merging","Single agent only","None"], answer:1}
+]},
+{ title:"Context Manipulation Attacks", summary:"Malicious context injections threaten agent safety. Suggested measures include memory isolation and integrity checks.", quiz:[
+{q:"Main threat discussed?", options:["Memory leak","Context manipulation","Hardware failure","None"], answer:1}
+]},
+{ title:"Why AI Isn’t a Coding Grandmaster Yet", summary:"Explores methods to train open models like Dobby-CP to achieve coding grandmaster-level performance.", quiz:[
+{q:"Why AI isn’t coding grandmaster?", options:["Needs more training","Already mastered","Not enough models","None"], answer:0}
+]},
+{ title:"Doesn’t Sound Like a Corporate Robot", summary:"Token-level routing lets models balance authentic tone with factual accuracy.", quiz:[
+{q:"Token-level routing helps models?", options:["Be robotic","Balance tone & accuracy","Ignore data","None"], answer:1}
+]},
+{ title:"Fingerprinting: Enabling Open-Source Monetization", summary:"Fingerprinting embeds hidden signatures in models to verify ownership and enable monetization.", quiz:[
+{q:"Fingerprinting is used to?", options:["Steal data","Verify ownership","Crash models","None"], answer:1}
+]},
+{ title:"Open Deep Search: Closing the Gap", summary:"Open Deep Search (ODS) combines reasoning + search, closing the gap between open and closed systems.", quiz:[
+{q:"ODS helps close gap between?", options:["Open & closed search AI","Humans & AI","Hardware & software","None"], answer:0}
+]},
+{ title:"AI Agents in Cryptoland", summary:"Discusses AI agents in blockchain ecosystems and risks they face in crypto environments.", quiz:[
+{q:"Main topic?", options:["Crypto AI agents","Gaming AI","Social media bots","None"], answer:0}
+]}
+];
 
-  const blogList = document.getElementById("blogList");
-  const mainContent = document.getElementById("mainContent");
+const blogList = document.getElementById("blogList");
+const mainContent = document.getElementById("mainContent");
 
-  function renderBlogList(){
-    mainContent.innerHTML = `<h2>Available Blogs</h2><div class="blog-list" id="blogList"></div>`;
-    const bl = document.getElementById("blogList");
-    blogs.forEach((blog, idx) => {
-      const card = document.createElement("div");
-      card.className = "blog-card";
-      card.innerHTML = `
-        <h3>${blog.title}</h3>
-        <a href="#" class="btn" onclick="openBlog(${idx}); return false;">Read Summary & Take Quiz</a>
-      `;
-      bl.appendChild(card);
+function renderBlogList(){
+  mainContent.innerHTML=`<h2>Available Blogs</h2><div class="blog-list" id="blogList"></div>`;
+  const bl=document.getElementById("blogList");
+  blogs.forEach((blog, idx)=>{
+    const card=document.createElement("div");
+    card.className="blog-card";
+    card.innerHTML=`<h3>${blog.title}</h3><a href="#" class="btn" onclick="openBlog(${idx}); return false;">Read & Quiz</a>`;
+    bl.appendChild(card);
+  });
+}
+
+function openBlog(index){
+  const blog=blogs[index];
+  mainContent.innerHTML=`<h2>${blog.title}</h2>
+  <div class="summary"><h3>Summary</h3><p>${blog.summary}</p></div>
+  <div id="quizContainer"><h3>Quiz</h3></div>
+  <button class="btn" style="margin-top:20px;" onclick="renderBlogList()">← Back to Blogs</button>`;
+  
+  const container=document.getElementById("quizContainer");
+  let correctCount=0;
+
+  blog.quiz.forEach((q,i)=>{
+    const qDiv=document.createElement("div");
+    qDiv.className="quiz-question";
+    qDiv.innerHTML=`<h4>${i+1}. ${q.q}</h4>`;
+    q.options.forEach((opt,idx)=>{
+      const optDiv=document.createElement("div");
+      optDiv.className="option";
+      optDiv.innerText=opt;
+      optDiv.onclick=()=>{
+        Array.from(qDiv.querySelectorAll(".option")).forEach(o=>o.style.pointerEvents="none");
+        if(idx===q.answer){ optDiv.classList.add("correct"); correctCount++; }
+        else{ optDiv.classList.add("wrong"); qDiv.querySelectorAll(".option")[q.answer].classList.add("correct"); }
+        if(i===blog.quiz.length-1){ showResult(correctCount, blog.quiz.length); }
+      };
+      qDiv.appendChild(optDiv);
     });
-  }
+    container.appendChild(qDiv);
+  });
+}
 
-  function openBlog(index) {
-    const blog = blogs[index];
-    mainContent.innerHTML = `
-      <h2>${blog.title}</h2>
-      <div class="summary">
-        <h3>Summary</h3>
-        <p>${blog.summary || "Summary will be added here."}</p>
-      </div>
-      <div id="quizContainer">
-        <h3>Quiz</h3>
-      </div>
-      <button class="btn" style="margin-top:20px;" onclick="renderBlogList()">← Back to Blogs</button>
-    `;
+function showResult(correct,total){
+  const resultDiv=document.createElement("div");
+  resultDiv.className="result";
+  resultDiv.innerHTML=`<h3>Your Score: ${correct} / ${total}</h3>`;
+  mainContent.appendChild(resultDiv);
+}
 
-    const container = document.getElementById("quizContainer");
-
-    if(blog.quiz.length === 0){
-      container.innerHTML += "<p>Quiz will be added soon.</p>";
-      return;
-    }
-
-    let correctCount = 0;
-
-    blog.quiz.forEach((q, i) => {
-      const qDiv = document.createElement("div");
-      qDiv.className = "quiz-question";
-      qDiv.innerHTML = `<h4>${i+1}. ${q.q}</h4>`;
-      q.options.forEach((opt, idx) => {
-        const optDiv = document.createElement("div");
-        optDiv.className = "option";
-        optDiv.innerText = opt;
-        optDiv.onclick = () => {
-          Array.from(qDiv.querySelectorAll(".option")).forEach(o => o.style.pointerEvents = "none");
-          if(idx === q.answer) {
-            optDiv.classList.add("correct");
-            correctCount++;
-          } else {
-            optDiv.classList.add("wrong");
-            qDiv.querySelectorAll(".option")[q.answer].classList.add("correct");
-          }
-          if(i === blog.quiz.length - 1){
-            showResult(correctCount, blog.quiz.length);
-          }
-        };
-        qDiv.appendChild(optDiv);
-      });
-      container.appendChild(qDiv);
-    });
-  }
-
-  function showResult(correct, total){
-    const resultDiv = document.createElement("div");
-    resultDiv.className = "result";
-    resultDiv.innerHTML = `<h3>Your Score: ${correct} / ${total}</h3>`;
-    mainContent.appendChild(resultDiv);
-  }
-
-  renderBlogList();
+renderBlogList();
 </script>
 </body>
 </html>
