@@ -18,35 +18,29 @@
       background: rgba(0,0,0,0.4);
     }
     header img {
-      height: 60px;
+      height: 70px;
+      border-radius: 50%;
     }
     .container {
       max-width: 900px;
       margin: auto;
       padding: 20px;
     }
-    .url-input {
-      display: flex;
-      gap: 10px;
-      margin: 20px 0;
+    .blog-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
     }
-    .url-input input {
-      flex: 1;
-      padding: 10px;
-      border: none;
-      border-radius: 8px;
-    }
-    .url-input button {
-      padding: 10px 20px;
-      background: #00c6ff;
-      border: none;
-      border-radius: 8px;
+    .blog-card {
+      background: rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 15px;
       cursor: pointer;
-      font-weight: bold;
-      transition: 0.3s;
+      transition: transform 0.3s;
     }
-    .url-input button:hover {
-      background: #0072ff;
+    .blog-card:hover {
+      transform: translateY(-5px);
+      background: rgba(255,255,255,0.2);
     }
     .summary, .quiz {
       background: rgba(255,255,255,0.1);
@@ -71,6 +65,19 @@
     }
     .correct { background: #28a745 !important; }
     .wrong { background: #dc3545 !important; }
+    .btn {
+      padding: 10px 20px;
+      background: #00c6ff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-top: 15px;
+      transition: 0.3s;
+    }
+    .btn:hover {
+      background: #0072ff;
+    }
     footer {
       text-align: center;
       padding: 20px;
@@ -84,48 +91,57 @@
       border-radius: 50%;
       margin-bottom: 10px;
     }
-    .socials a {
+    .socials {
+      margin-top: 10px;
+    }
+    .socials a, .socials span {
       margin: 0 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
       color: white;
       text-decoration: none;
-      font-size: 22px;
+      font-size: 16px;
     }
-    @media(max-width: 600px){
-      .url-input { flex-direction: column; }
-      .url-input button { width: 100%; }
+    .socials img {
+      height: 20px;
+      width: 20px;
+      border-radius: 4px;
     }
   </style>
 </head>
 <body>
 
 <header>
-  <img src="https://sentient.xyz/images/logo.svg" alt="Sentient Logo">
+  <img src="https://pbs.twimg.com/profile_images/1966252290500710400/iacpKDQc_400x400.jpg" alt="Sentient Logo">
   <h1>Sentient Blog Summarizer</h1>
-  <p>Summaries & Quizzes from Sentient's Official Blog</p>
+  <p>Read summaries & test your knowledge with quizzes</p>
 </header>
 
-<div class="container">
-  <div class="url-input">
-    <input type="text" id="blogUrl" placeholder="Paste Sentient Blog URL...">
-    <button onclick="loadBlog()">Summarize</button>
-  </div>
-
-  <div id="content"></div>
+<div class="container" id="mainContent">
+  <h2>Available Blogs</h2>
+  <div class="blog-list" id="blogList"></div>
 </div>
 
 <footer>
   <img class="pfp" src="https://pbs.twimg.com/profile_images/1868541602320293888/-rPhBPR0_400x400.jpg" alt="Risky">
   <p>Made by Risky</p>
   <div class="socials">
-    <a href="https://x.com/risky_xyz" target="_blank">🐦</a>
-    <a href="https://discord.com/users/riskyyy.xd" target="_blank">💬</a>
+    <a href="https://x.com/risky_xyz" target="_blank">
+      <img src="https://pbs.twimg.com/profile_images/1861160031061745664/_BKu0vhx_400x400.jpg" alt="X"> @risky_xyz
+    </a>
+    <span>
+      <img src="https://pbs.twimg.com/profile_images/1795851438956204032/rLl5Y48q_400x400.jpg" alt="Discord"> riskyyy.xd
+    </span>
   </div>
 </footer>
 
 <script>
-  const blogs = {
-    "https://blog.sentient.xyz/posts/grid-just-got-an-upgrade": {
-      summary: "GRID received a major upgrade, enhancing orchestration capabilities. It improves collaboration between agents and makes reasoning more efficient. This update pushes Sentient closer to scalable open AI.",
+  const blogs = [
+    {
+      title: "GRID Just Got an Upgrade",
+      url: "https://blog.sentient.xyz/posts/grid-just-got-an-upgrade",
+      summary: "GRID received a major upgrade, enhancing orchestration capabilities. It improves collaboration between agents and makes reasoning more efficient. This pushes Sentient closer to scalable open AI.",
       quiz: [
         {q: "What was upgraded in Sentient?", options: ["Agents", "GRID", "Context attacks", "Legal Reasoning"], answer: 1},
         {q: "The upgrade improved?", options: ["Cooking", "Collaboration", "Music", "Drawing"], answer: 1},
@@ -134,8 +150,10 @@
         {q: "Sentient aims to scale?", options: ["Centralized AI", "Open AI", "Private AI", "Closed AI"], answer: 1}
       ]
     },
-    "https://blog.sentient.xyz/posts/what-is-sentient": {
-      summary: "Sentient is building an open-source ecosystem for intelligence. It focuses on decentralization, scalability, and openness. Unlike corporate AI, Sentient aims to empower individuals and developers globally.",
+    {
+      title: "What is Sentient?",
+      url: "https://blog.sentient.xyz/posts/what-is-sentient",
+      summary: "Sentient is building an open-source ecosystem for intelligence. It focuses on decentralization, scalability, and openness. Unlike corporate AI, Sentient empowers individuals and developers globally.",
       quiz: [
         {q: "Sentient is?", options: ["A Game", "An AI Ecosystem", "A Meme", "A Coin"], answer: 1},
         {q: "It focuses on?", options: ["Centralization", "Decentralization", "Monopoly", "Gaming"], answer: 1},
@@ -144,33 +162,43 @@
         {q: "Goal of Sentient?", options: ["Lock AI", "Monetize Only", "Scale Open AI", "Close Tech"], answer: 2}
       ]
     }
-    // Add more blogs here in same format
-  };
+    // Add rest of the blogs here with summary + quiz
+  ];
 
-  function loadBlog(){
-    const url = document.getElementById("blogUrl").value.trim();
-    const blog = blogs[url];
-    const content = document.getElementById("content");
-    content.innerHTML = "";
+  const blogList = document.getElementById("blogList");
+  const mainContent = document.getElementById("mainContent");
 
-    if(!blog){
-      content.innerHTML = "<p>Blog not found or not added yet. Please try another.</p>";
-      return;
-    }
+  blogs.forEach((blog, idx) => {
+    const card = document.createElement("div");
+    card.className = "blog-card";
+    card.innerHTML = `<h3>${blog.title}</h3><p>${blog.url}</p>`;
+    card.onclick = () => openBlog(idx);
+    blogList.appendChild(card);
+  });
 
-    // Show Summary
-    const summaryDiv = document.createElement("div");
-    summaryDiv.className = "summary";
-    summaryDiv.innerHTML = `<h2>Summary</h2><p>${blog.summary}</p>`;
-    content.appendChild(summaryDiv);
+  function openBlog(index){
+    const blog = blogs[index];
+    mainContent.innerHTML = `
+      <h2>${blog.title}</h2>
+      <div class="summary">
+        <h3>Summary</h3>
+        <p>${blog.summary}</p>
+      </div>
+      <button class="btn" onclick="showQuiz(${index})">Take Quiz</button>
+      <div id="quizContainer"></div>
+      <button class="btn" style="margin-top:20px;" onclick="goBack()">← Back to Blogs</button>
+    `;
+  }
 
-    // Show Quiz
-    const quizDiv = document.createElement("div");
-    quizDiv.className = "quiz";
-    quizDiv.innerHTML = `<h2>Quiz</h2>`;
+  function showQuiz(index){
+    const blog = blogs[index];
+    const quizDiv = document.getElementById("quizContainer");
+    quizDiv.innerHTML = `<div class="quiz"><h3>Quiz</h3></div>`;
+    const quizBox = quizDiv.querySelector(".quiz");
+
     blog.quiz.forEach((q, i) => {
       let qDiv = document.createElement("div");
-      qDiv.innerHTML = `<h3>${i+1}. ${q.q}</h3>`;
+      qDiv.innerHTML = `<h4>${i+1}. ${q.q}</h4>`;
       q.options.forEach((opt, idx) => {
         let optDiv = document.createElement("div");
         optDiv.className = "option";
@@ -184,9 +212,20 @@
         };
         qDiv.appendChild(optDiv);
       });
-      quizDiv.appendChild(qDiv);
+      quizBox.appendChild(qDiv);
     });
-    content.appendChild(quizDiv);
+  }
+
+  function goBack(){
+    mainContent.innerHTML = `<h2>Available Blogs</h2><div class="blog-list" id="blogList"></div>`;
+    const blogListNew = document.getElementById("blogList");
+    blogs.forEach((blog, idx) => {
+      const card = document.createElement("div");
+      card.className = "blog-card";
+      card.innerHTML = `<h3>${blog.title}</h3><p>${blog.url}</p>`;
+      card.onclick = () => openBlog(idx);
+      blogListNew.appendChild(card);
+    });
   }
 </script>
 
