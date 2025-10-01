@@ -5,30 +5,30 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Sentient Blog Summarizer</title>
 <style>
-  body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin:0; padding:0; background: linear-gradient(135deg,#0f2027,#203a43,#2c5364); color:#f4f4f4; }
-  header { text-align:center; padding:30px 20px; background:rgba(0,0,0,0.4); box-shadow:0 4px 15px rgba(0,0,0,0.3);}
-  header img {height:80px;border-radius:50%;margin-bottom:10px;}
-  header h1 {margin:10px 0 5px;font-size:2rem;letter-spacing:1px;}
-  header p {font-size:1rem;opacity:0.8;}
-  .container { max-width:1000px; margin:auto; padding:30px 20px;}
-  h2 {margin-bottom:20px; text-align:center; font-size:1.8rem;}
-  .blog-list { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:25px; }
-  .blog-card { background:rgba(255,255,255,0.08); border-radius:16px; padding:20px; box-shadow:0 6px 15px rgba(0,0,0,0.3); transition:0.3s; }
-  .blog-card:hover { transform:translateY(-8px); background:rgba(255,255,255,0.15);}
-  .blog-card h3 { margin:0 0 10px; font-size:1.3rem;}
-  .btn {padding:10px 18px; background:linear-gradient(45deg,#00c6ff,#0072ff); border:none;border-radius:8px;cursor:pointer;font-weight:bold;color:white;transition:0.3s; display:inline-block; text-decoration:none; font-size:0.9rem;}
-  .btn:hover { background:linear-gradient(45deg,#0072ff,#00c6ff);}
-  .summary, .quiz, .result {background: rgba(255,255,255,0.08); border-radius:16px; padding:25px; margin:25px 0; box-shadow:0 6px 15px rgba(0,0,0,0.3);}
-  .quiz h3 { margin-top:0; }
-  .option { padding:12px; border-radius:10px; margin:8px 0; cursor:pointer; background:rgba(255,255,255,0.05); transition:0.3s;}
-  .option:hover { background:rgba(255,255,255,0.2);}
-  .correct { background:#28a745 !important; color:#fff; }
-  .wrong { background:#dc3545 !important; color:#fff; }
-  footer { text-align:center; padding:25px 15px; margin-top:40px; background:rgba(0,0,0,0.6); border-top:1px solid rgba(255,255,255,0.2);}
-  footer img.pfp { height:65px; width:65px; border-radius:50%; margin-bottom:10px; box-shadow:0 0 12px rgba(0,0,0,0.6);}
-  .socials { margin-top:10px; }
-  .socials a, .socials span { margin:0 12px; display:inline-flex; align-items:center; gap:6px; color:white; text-decoration:none; font-size:15px;}
-  .socials img {height:20px; width:20px; border-radius:4px;}
+body { font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin:0; padding:0; background: linear-gradient(135deg,#0f2027,#203a43,#2c5364); color:#f4f4f4;}
+header { text-align:center; padding:30px 20px; background:rgba(0,0,0,0.4); box-shadow:0 4px 15px rgba(0,0,0,0.3);}
+header img {height:80px; border-radius:50%; margin-bottom:10px;}
+header h1 {margin:10px 0 5px; font-size:2rem; letter-spacing:1px;}
+header p {font-size:1rem; opacity:0.8;}
+.container { max-width:1000px; margin:auto; padding:30px 20px;}
+h2 {margin-bottom:20px; text-align:center; font-size:1.8rem;}
+.blog-list { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:25px; }
+.blog-card { background:rgba(255,255,255,0.08); border-radius:16px; padding:20px; box-shadow:0 6px 15px rgba(0,0,0,0.3); transition:0.3s; }
+.blog-card:hover { transform:translateY(-8px); background:rgba(255,255,255,0.15);}
+.blog-card h3 { margin:0 0 10px; font-size:1.3rem;}
+.btn {padding:10px 18px; background:linear-gradient(45deg,#00c6ff,#0072ff); border:none;border-radius:8px;cursor:pointer;font-weight:bold;color:white;transition:0.3s; display:inline-block; text-decoration:none; font-size:0.9rem;}
+.btn:hover { background:linear-gradient(45deg,#0072ff,#00c6ff);}
+.summary, .quiz, .result {background: rgba(255,255,255,0.08); border-radius:16px; padding:25px; margin:25px 0; box-shadow:0 6px 15px rgba(0,0,0,0.3);}
+.quiz h3 { margin-top:0; }
+.option { padding:12px; border-radius:10px; margin:8px 0; cursor:pointer; background:rgba(255,255,255,0.05); transition:0.3s;}
+.option:hover { background:rgba(255,255,255,0.2);}
+.correct { background:#28a745 !important; color:#fff; }
+.wrong { background:#dc3545 !important; color:#fff; }
+footer { text-align:center; padding:25px 15px; margin-top:40px; background:rgba(0,0,0,0.6); border-top:1px solid rgba(255,255,255,0.2);}
+footer img.pfp { height:65px; width:65px; border-radius:50%; margin-bottom:10px; box-shadow:0 0 12px rgba(0,0,0,0.6);}
+.socials { margin-top:10px; }
+.socials a, .socials span { margin:0 12px; display:inline-flex; align-items:center; gap:6px; color:white; text-decoration:none; font-size:15px;}
+.socials img {height:20px; width:20px; border-radius:4px;}
 </style>
 </head>
 <body>
@@ -54,46 +54,52 @@
 
 <script>
 const blogs = [
-{ title:"GRID Just Got an Upgrade", summary:"The GRID introduces 'Spaces' in Sentient Chat for better orchestration of agents, models, and workflows.", quiz:[
-{q:"What new feature did GRID introduce?", options:["Agents","Spaces","Models","Workflows"], answer:1},
-{q:"GRID helps orchestrate?", options:["Agents","Models","Both","None"], answer:2}
+{ title:"What is Sentient?", link:"https://blog.sentient.xyz/posts/what-is-sentient", summary:"Sentient is building the first open community-built AGI to challenge closed-source systems. The GRID network connects agents, models, data, and computing resources. Sentient Chat provides access and the $SENT economy allows staking and open-source funding.", quiz:[
+{q:"What is the goal of Sentient?", options:["Closed-source AI","Open community-built AGI","Hardware development","Gaming AI"], answer:1},
+{q:"What is The GRID?", options:["AI robot","Network of agents and models","Programming language","Company"], answer:1},
+{q:"How do users access GRID?", options:["Direct terminal","Sentient Chat","Email","API only"], answer:1},
+{q:"What is $SENT used for?", options:["Gaming","Open-source funding and staking","AI hardware","Messaging"], answer:1},
+{q:"Why is Sentient created?", options:["To monopolize AI","To challenge closed AGI dominance","To develop games","To create robots"], answer:1}
 ]},
-{ title:"Recursive Open Meta Agent (ROMA)", summary:"ROMA is a meta-agent framework that recursively breaks tasks into subtasks and aggregates results.", quiz:[
-{q:"ROMA stands for?", options:["Recursive Open Meta Agent","Robust Operational Model Agent","Random Open Meta Algorithm","None"], answer:0},
-{q:"ROMA's main function is?", options:["Single task solving","Recursive task handling","Manual agent control","None"], answer:1}
+{ title:"What is GRID?", link:"https://blog.sentient.xyz/posts/what-is-grid", summary:"GRID (Global Research and Intelligence Directory) is an open-source ecosystem of specialized intelligences. Queries are split, routed to appropriate components, and recombined. Sentient Chat is the interface. Over 110 participants offer agents, models, and data. $SENT token incentivizes participation and funding.", quiz:[
+{q:"GRID stands for?", options:["Global Research and Intelligence Directory","General AI Directory","Global Robot Interface","None"], answer:0},
+{q:"How does GRID process queries?", options:["Single AI","Split, route, recombine","Manual handling","Ignore queries"], answer:1},
+{q:"How many participants in GRID?", options:["50","110+","10","500"], answer:1},
+{q:"What interface gives access to GRID?", options:["GRID Terminal","Sentient Chat","OpenAI Chat","API"], answer:1},
+{q:"What is the role of $SENT?", options:["Staking and funding","Gaming","Chatting","Hardware"], answer:0}
 ]},
-{ title:"What is GRID", summary:"GRID is Sentient’s open ecosystem of agents, models, and tools. Queries are split, routed, and recombined.", quiz:[
-{q:"GRID is a?", options:["Closed system","Open ecosystem","AI robot","None"], answer:1},
-{q:"GRID handles queries by?", options:["Routing & recombining","Ignoring","Manual input","All"], answer:0}
+{ title:"Recursive Open Meta Agent (ROMA)", link:"https://blog.sentient.xyz/posts/recursive-open-meta-agent", summary:"ROMA is a recursive multi-agent framework that breaks complex goals into subtasks processed by specialized agents. Context flows seamlessly, enabling transparent and traceable reasoning.", quiz:[
+{q:"What does ROMA do?", options:["Single AI tasks","Breaks complex goals into subtasks","Creates hardware","Monitors chat"], answer:1},
+{q:"ROMA is?", options:["Closed system","Open multi-agent framework","Game","Language model"], answer:1},
+{q:"Why use ROMA?", options:["Random processing","Transparent reasoning","Gaming","Email handling"], answer:1},
+{q:"Tasks in ROMA are handled by?", options:["Humans","Specialized agents","Random AI","API only"], answer:1},
+{q:"ROMA ensures?", options:["Secrecy","Context flows seamlessly","Gaming","None"], answer:1}
 ]},
-{ title:"What is Sentient", summary:"Sentient aims to build open, community-driven AGI instead of closed proprietary systems.", quiz:[
-{q:"Sentient focuses on?", options:["Closed AI","Community-driven AGI","Hardware","None"], answer:1}
+{ title:"How Does the GRID Orchestrate Intelligence?", link:"https://blog.sentient.xyz/posts/how-does-the-grid-orchestrate-intelligence", summary:"GRID orchestrates thousands of agents, models, and data streams to deliver AGI-level outputs. It uses workflows, recursive atomization, and token-level routing to efficiently process queries.", quiz:[
+{q:"GRID orchestration involves?", options:["Thousands of models and agents","Single AI","Manual handling","None"], answer:0},
+{q:"What is recursive atomization?", options:["Breaking queries into atomic tasks","Ignoring queries","Single agent process","Random distribution"], answer:0},
+{q:"What are workflows in GRID?", options:["Predefined processes for queries","Games","Hardware operations","Email pipelines"], answer:0},
+{q:"Token-level routing routes at?", options:["Query level","Sentence level","Token level","Paragraph level"], answer:2},
+{q:"What type of output does GRID deliver?", options:["AGI-level","Simple","Random","Text only"], answer:0}
 ]},
-{ title:"How Does the GRID Orchestrate Intelligence", summary:"GRID orchestrates intelligence by routing, atomizing queries, and merging outputs from multiple agents.", quiz:[
-{q:"GRID orchestrates intelligence via?", options:["Random guesses","Routing & merging","Single agent only","None"], answer:1}
+{ title:"Fingerprinting: Enabling Open-Source Monetization", link:"https://blog.sentient.xyz/posts/fingerprinting-enabling-open-source-monetization-on-the-model-layer", summary:"Fingerprinting embeds unique digital signatures into AI models for verifiable ownership. It enforces licensing, aligns models with community values, and tracks usage via smart contracts.", quiz:[
+{q:"What is fingerprinting used for?", options:["Ownership verification","Gaming","Chat","Random"], answer:0},
+{q:"How are signatures embedded?", options:["Invisible key-response pairs","Obvious watermark","Hardware","API"], answer:0},
+{q:"What does fingerprinting enforce?", options:["Licensing and usage control","Games","Chat","None"], answer:0},
+{q:"Models are aligned to?", options:["Community values","Hardware","Random AI","Chat"], answer:0},
+{q:"Tracking is via?", options:["Smart contracts","Email","Manual logs","Gaming"], answer:0}
 ]},
-{ title:"Context Manipulation Attacks", summary:"Malicious context injections threaten agent safety. Suggested measures include memory isolation and integrity checks.", quiz:[
-{q:"Main threat discussed?", options:["Memory leak","Context manipulation","Hardware failure","None"], answer:1}
-]},
-{ title:"Why AI Isn’t a Coding Grandmaster Yet", summary:"Explores methods to train open models like Dobby-CP to achieve coding grandmaster-level performance.", quiz:[
-{q:"Why AI isn’t coding grandmaster?", options:["Needs more training","Already mastered","Not enough models","None"], answer:0}
-]},
-{ title:"Doesn’t Sound Like a Corporate Robot", summary:"Token-level routing lets models balance authentic tone with factual accuracy.", quiz:[
-{q:"Token-level routing helps models?", options:["Be robotic","Balance tone & accuracy","Ignore data","None"], answer:1}
-]},
-{ title:"Fingerprinting: Enabling Open-Source Monetization", summary:"Fingerprinting embeds hidden signatures in models to verify ownership and enable monetization.", quiz:[
-{q:"Fingerprinting is used to?", options:["Steal data","Verify ownership","Crash models","None"], answer:1}
-]},
-{ title:"Open Deep Search: Closing the Gap", summary:"Open Deep Search (ODS) combines reasoning + search, closing the gap between open and closed systems.", quiz:[
-{q:"ODS helps close gap between?", options:["Open & closed search AI","Humans & AI","Hardware & software","None"], answer:0}
-]},
-{ title:"AI Agents in Cryptoland", summary:"Discusses AI agents in blockchain ecosystems and risks they face in crypto environments.", quiz:[
-{q:"Main topic?", options:["Crypto AI agents","Gaming AI","Social media bots","None"], answer:0}
+{ title:"GRID just got an upgrade", link:"https://blog.sentient.xyz/posts/grid-just-got-an-upgrade", summary:"GRID added Spaces inside Sentient Chat, unifying data, agents, and models into workflows. Tools like ROMA, Open Deep Search, Dobby, and Fingerprinting are included. Spaces examples: Asset Reports, Travel Planning, and Good Morning Reports.", quiz:[
+{q:"What new feature was added?", options:["Spaces","Agents","Models","Tokens"], answer:0},
+{q:"Spaces unify?", options:["Data, agents, models","Hardware","Chat apps","Games"], answer:0},
+{q:"Which tool handles complex tasks?", options:["ROMA","Dobby","Open Deep Search","Fingerprinting"], answer:0},
+{q:"Example of Spaces?", options:["Travel Planning","Hardware","Email","Gaming"], answer:0},
+{q:"Sentient Chat now is?", options:["More practical and user-friendly","Less functional","Random","Gaming"], answer:0}
 ]}
 ];
 
-const blogList = document.getElementById("blogList");
-const mainContent = document.getElementById("mainContent");
+const blogList=document.getElementById("blogList");
+const mainContent=document.getElementById("mainContent");
 
 function renderBlogList(){
   mainContent.innerHTML=`<h2>Available Blogs</h2><div class="blog-list" id="blogList"></div>`;
@@ -101,7 +107,8 @@ function renderBlogList(){
   blogs.forEach((blog, idx)=>{
     const card=document.createElement("div");
     card.className="blog-card";
-    card.innerHTML=`<h3>${blog.title}</h3><a href="#" class="btn" onclick="openBlog(${idx}); return false;">Read & Quiz</a>`;
+    card.innerHTML=`<h3>${blog.title}</h3><a href="${blog.link}" target="_blank" class="btn">Original Blog</a> 
+    <a href="#" class="btn" onclick="openBlog(${idx}); return false;">Read & Quiz</a>`;
     bl.appendChild(card);
   });
 }
@@ -112,7 +119,7 @@ function openBlog(index){
   <div class="summary"><h3>Summary</h3><p>${blog.summary}</p></div>
   <div id="quizContainer"><h3>Quiz</h3></div>
   <button class="btn" style="margin-top:20px;" onclick="renderBlogList()">← Back to Blogs</button>`;
-  
+
   const container=document.getElementById("quizContainer");
   let correctCount=0;
 
