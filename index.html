@@ -53,43 +53,75 @@ footer img.pfp { height:65px; width:65px; border-radius:50%; margin-bottom:10px;
 </footer>
 
 <script>
+function shuffleArray(array){
+  for(let i=array.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [array[i],array[j]]=[array[j],array[i]];
+  }
+  return array;
+}
+
 const blogs = [
-{ title:"What is Sentient?", link:"https://blog.sentient.xyz/posts/what-is-sentient", summary:"Sentient is building the first open community-built AGI to challenge closed-source systems. The GRID network connects agents, models, data, and computing resources. Sentient Chat provides access and the $SENT economy allows staking and open-source funding.", quiz:[
+{
+title:"What is Sentient?",
+link:"https://blog.sentient.xyz/posts/what-is-sentient",
+summary:"Sentient is creating the first open, community-built AGI to challenge closed-source systems from companies like OpenAI and Google. The GRID is a network of agents, models, data, and computing resources working together. Sentient Chat provides users with access to The GRID, while the $SENT economy enables staking and open-source funding. This approach ensures a distributed, cooperative, and transparent development of AGI that empowers the community and mitigates the concentration of AI control.",
+quiz:[
 {q:"What is the goal of Sentient?", options:["Closed-source AI","Open community-built AGI","Hardware development","Gaming AI"], answer:1},
 {q:"What is The GRID?", options:["AI robot","Network of agents and models","Programming language","Company"], answer:1},
 {q:"How do users access GRID?", options:["Direct terminal","Sentient Chat","Email","API only"], answer:1},
 {q:"What is $SENT used for?", options:["Gaming","Open-source funding and staking","AI hardware","Messaging"], answer:1},
-{q:"Why is Sentient created?", options:["To monopolize AI","To challenge closed AGI dominance","To develop games","To create robots"], answer:1}
+{q:"Why was Sentient created?", options:["To monopolize AI","To challenge closed AGI dominance","To develop games","To create robots"], answer:1}
 ]},
-{ title:"What is GRID?", link:"https://blog.sentient.xyz/posts/what-is-grid", summary:"GRID (Global Research and Intelligence Directory) is an open-source ecosystem of specialized intelligences. Queries are split, routed to appropriate components, and recombined. Sentient Chat is the interface. Over 110 participants offer agents, models, and data. $SENT token incentivizes participation and funding.", quiz:[
+{
+title:"What is GRID?",
+link:"https://blog.sentient.xyz/posts/what-is-grid",
+summary:"GRID stands for Global Research and Intelligence Directory and is an open ecosystem of specialized intelligences. Queries are intelligently split, routed to the appropriate agents or models, and results are recombined into a coherent answer. Sentient Chat serves as the interface, and developers can distribute tools while users access various agents and models. Over 110 participants offer specialized agents, data sources, and infrastructure. The $SENT token economy incentivizes contributions and ensures that rewards flow to valuable projects.",
+quiz:[
 {q:"GRID stands for?", options:["Global Research and Intelligence Directory","General AI Directory","Global Robot Interface","None"], answer:0},
 {q:"How does GRID process queries?", options:["Single AI","Split, route, recombine","Manual handling","Ignore queries"], answer:1},
 {q:"How many participants in GRID?", options:["50","110+","10","500"], answer:1},
 {q:"What interface gives access to GRID?", options:["GRID Terminal","Sentient Chat","OpenAI Chat","API"], answer:1},
 {q:"What is the role of $SENT?", options:["Staking and funding","Gaming","Chatting","Hardware"], answer:0}
 ]},
-{ title:"Recursive Open Meta Agent (ROMA)", link:"https://blog.sentient.xyz/posts/recursive-open-meta-agent", summary:"ROMA is a recursive multi-agent framework that breaks complex goals into subtasks processed by specialized agents. Context flows seamlessly, enabling transparent and traceable reasoning.", quiz:[
+{
+title:"Recursive Open Meta Agent (ROMA)",
+link:"https://blog.sentient.xyz/posts/recursive-open-meta-agent",
+summary:"ROMA is an open-source recursive meta-agent framework that decomposes complex goals into smaller subtasks handled by specialized agents or tools. Context flows seamlessly through each step, enabling transparent and traceable reasoning. This hierarchical structure allows for flexible, high-performance multi-agent systems capable of tackling sophisticated problems efficiently.",
+quiz:[
 {q:"What does ROMA do?", options:["Single AI tasks","Breaks complex goals into subtasks","Creates hardware","Monitors chat"], answer:1},
 {q:"ROMA is?", options:["Closed system","Open multi-agent framework","Game","Language model"], answer:1},
 {q:"Why use ROMA?", options:["Random processing","Transparent reasoning","Gaming","Email handling"], answer:1},
 {q:"Tasks in ROMA are handled by?", options:["Humans","Specialized agents","Random AI","API only"], answer:1},
 {q:"ROMA ensures?", options:["Secrecy","Context flows seamlessly","Gaming","None"], answer:1}
 ]},
-{ title:"How Does the GRID Orchestrate Intelligence?", link:"https://blog.sentient.xyz/posts/how-does-the-grid-orchestrate-intelligence", summary:"GRID orchestrates thousands of agents, models, and data streams to deliver AGI-level outputs. It uses workflows, recursive atomization, and token-level routing to efficiently process queries.", quiz:[
+{
+title:"How Does the GRID Orchestrate Intelligence?",
+link:"https://blog.sentient.xyz/posts/how-does-the-grid-orchestrate-intelligence",
+summary:"The GRID orchestrates thousands of models, agents, and data streams to produce AGI-level outputs. It uses expert and community-defined workflows for straightforward queries, while complex queries are recursively atomized into smaller tasks. Token-level routing ensures that each smallest unit of information is sent to the most suitable agent or model, and results are stitched together into a final coherent answer, allowing highly scalable and intelligent coordination.",
+quiz:[
 {q:"GRID orchestration involves?", options:["Thousands of models and agents","Single AI","Manual handling","None"], answer:0},
 {q:"What is recursive atomization?", options:["Breaking queries into atomic tasks","Ignoring queries","Single agent process","Random distribution"], answer:0},
 {q:"What are workflows in GRID?", options:["Predefined processes for queries","Games","Hardware operations","Email pipelines"], answer:0},
 {q:"Token-level routing routes at?", options:["Query level","Sentence level","Token level","Paragraph level"], answer:2},
 {q:"What type of output does GRID deliver?", options:["AGI-level","Simple","Random","Text only"], answer:0}
 ]},
-{ title:"Fingerprinting: Enabling Open-Source Monetization", link:"https://blog.sentient.xyz/posts/fingerprinting-enabling-open-source-monetization-on-the-model-layer", summary:"Fingerprinting embeds unique digital signatures into AI models for verifiable ownership. It enforces licensing, aligns models with community values, and tracks usage via smart contracts.", quiz:[
+{
+title:"Fingerprinting: Enabling Open-Source Monetization",
+link:"https://blog.sentient.xyz/posts/fingerprinting-enabling-open-source-monetization-on-the-model-layer",
+summary:"Fingerprinting embeds unique digital signatures in AI models to verify ownership and control. It allows creators to enforce licensing, track usage, and align models with community principles. Smart contracts record authorized usage, creating a secure and monetizable framework for open-source AI while ensuring transparency and protecting creators' rights.",
+quiz:[
 {q:"What is fingerprinting used for?", options:["Ownership verification","Gaming","Chat","Random"], answer:0},
 {q:"How are signatures embedded?", options:["Invisible key-response pairs","Obvious watermark","Hardware","API"], answer:0},
 {q:"What does fingerprinting enforce?", options:["Licensing and usage control","Games","Chat","None"], answer:0},
 {q:"Models are aligned to?", options:["Community values","Hardware","Random AI","Chat"], answer:0},
 {q:"Tracking is via?", options:["Smart contracts","Email","Manual logs","Gaming"], answer:0}
 ]},
-{ title:"GRID just got an upgrade", link:"https://blog.sentient.xyz/posts/grid-just-got-an-upgrade", summary:"GRID added Spaces inside Sentient Chat, unifying data, agents, and models into workflows. Tools like ROMA, Open Deep Search, Dobby, and Fingerprinting are included. Spaces examples: Asset Reports, Travel Planning, and Good Morning Reports.", quiz:[
+{
+title:"GRID just got an upgrade",
+link:"https://blog.sentient.xyz/posts/grid-just-got-an-upgrade",
+summary:"GRID added Spaces inside Sentient Chat, unifying data, agents, and models into seamless workflows. Tools like ROMA, Open Deep Search, Dobby, and Fingerprinting are integrated. Spaces examples include Asset Reports, Travel Planning, and Good Morning Reports. This upgrade makes Sentient Chat more practical, user-friendly, and powerful for both builders and users.",
+quiz:[
 {q:"What new feature was added?", options:["Spaces","Agents","Models","Tokens"], answer:0},
 {q:"Spaces unify?", options:["Data, agents, models","Hardware","Chat apps","Games"], answer:0},
 {q:"Which tool handles complex tasks?", options:["ROMA","Dobby","Open Deep Search","Fingerprinting"], answer:0},
@@ -107,7 +139,8 @@ function renderBlogList(){
   blogs.forEach((blog, idx)=>{
     const card=document.createElement("div");
     card.className="blog-card";
-    card.innerHTML=`<h3>${blog.title}</h3><a href="${blog.link}" target="_blank" class="btn">Original Blog</a> 
+    card.innerHTML=`<h3>${blog.title}</h3>
+    <a href="${blog.link}" target="_blank" class="btn">Original Blog</a> 
     <a href="#" class="btn" onclick="openBlog(${idx}); return false;">Read & Quiz</a>`;
     bl.appendChild(card);
   });
@@ -127,13 +160,16 @@ function openBlog(index){
     const qDiv=document.createElement("div");
     qDiv.className="quiz-question";
     qDiv.innerHTML=`<h4>${i+1}. ${q.q}</h4>`;
-    q.options.forEach((opt,idx)=>{
+    
+    let shuffledOptions = shuffleArray(q.options.map((opt, idx) => ({text: opt, idx: idx})));
+    
+    shuffledOptions.forEach(optObj=>{
       const optDiv=document.createElement("div");
       optDiv.className="option";
-      optDiv.innerText=opt;
+      optDiv.innerText=optObj.text;
       optDiv.onclick=()=>{
         Array.from(qDiv.querySelectorAll(".option")).forEach(o=>o.style.pointerEvents="none");
-        if(idx===q.answer){ optDiv.classList.add("correct"); correctCount++; }
+        if(optObj.idx===q.answer){ optDiv.classList.add("correct"); correctCount++; }
         else{ optDiv.classList.add("wrong"); qDiv.querySelectorAll(".option")[q.answer].classList.add("correct"); }
         if(i===blog.quiz.length-1){ showResult(correctCount, blog.quiz.length); }
       };
